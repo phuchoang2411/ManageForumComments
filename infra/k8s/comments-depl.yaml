@@ -15,6 +15,9 @@ spec:
       containers:
         - name: comments
           image: phuchoang2411/comments
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://comments-mongo-srv:27017/comments'
 ---
 apiVersion: v1
 kind: Service

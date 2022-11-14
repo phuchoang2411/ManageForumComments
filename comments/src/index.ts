@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const { randomBytes } = require('crypto');
@@ -10,11 +12,11 @@ app.use(cors());
 
 const commentsByPostId = {};
 
-app.get('/posts/:id/comments', (req, res) => {
-  res.send(commentsByPostId[req.params.id] || []);
-});
+// app.get('/posts/:id/comments', (req, res) => {
+//   res.send(commentsByPostId[req.params.id] || []);
+// });
 
-app.post('/posts/:id/comments', async (req, res) => {
+app.post('/posts/:id/comments', async (req: Request, res: Response) => {
   const commentId = randomBytes(4).toString('hex');
   const { content } = req.body;
 
@@ -37,7 +39,7 @@ app.post('/posts/:id/comments', async (req, res) => {
   res.status(201).send(comments);
 });
 
-app.post('/events', async (req, res) => {
+app.post('/events', async (req: Request, res: Response) => {
   console.log('Received Event', req.body.type);
 
   const { type, data } = req.body;

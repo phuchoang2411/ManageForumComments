@@ -18,7 +18,6 @@ app.post('/events', async (req, res) => {
     await axios.post('http://comments-srv:4001/events', event);
     await axios.post('http://query-srv:4002/events', event);
     await axios.post('http://moderation-srv:4003/events', event);
-    console.log('OK');
   } catch (error) {
     console.log('Error');
   }
