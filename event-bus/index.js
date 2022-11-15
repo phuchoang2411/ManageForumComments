@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 //app.use(cors());
 
 const events = [];
+let count = 0;
 
 app.post('/events', async (req, res) => {
   const event = req.body;
@@ -20,17 +21,22 @@ app.post('/events', async (req, res) => {
     }
   }
 
-  console.log(event.type);
   if (event.type == 'CommentCreated') {
+    setTimeout(function () {
+      count = 0;
+    }, 10000);
+
     try {
-      await axios.post('http://query-srv:4002/events', event);
+      if (count < 1000) await axios.post('http://query-srv:4002/events', event);
       console.log(event.type);
+      count++;
     } catch (error) {
       console.log('Error');
     }
   }
 
   events.push(event);
+  console.log(count);
 
   res.send({ status: 'OK' });
 });
