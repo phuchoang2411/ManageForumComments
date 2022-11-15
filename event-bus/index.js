@@ -11,16 +11,26 @@ const events = [];
 
 app.post('/events', async (req, res) => {
   const event = req.body;
+  if (event.type == 'PostCreated') {
+    try {
+      await axios.post('http://query-srv:4002/events', event);
+      console.log(event.type);
+    } catch (error) {
+      console.log('Error');
+    }
+  }
+
+  console.log(event.type);
+  if (event.type == 'CommentCreated') {
+    try {
+      await axios.post('http://query-srv:4002/events', event);
+      console.log(event.type);
+    } catch (error) {
+      console.log('Error');
+    }
+  }
 
   events.push(event);
-  try {
-    await axios.post('http://posts-clusterip-srv:4000/events', event);
-    await axios.post('http://comments-srv:4001/events', event);
-    await axios.post('http://query-srv:4002/events', event);
-    await axios.post('http://moderation-srv:4003/events', event);
-  } catch (error) {
-    console.log('Error');
-  }
 
   res.send({ status: 'OK' });
 });

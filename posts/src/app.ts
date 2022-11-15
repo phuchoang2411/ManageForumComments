@@ -1,11 +1,10 @@
 import { Post } from './models/post';
-import { Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const { randomBytes } = require('crypto');
-const cors = require('cors');
-const axios = require('axios');
+import bodyParser from 'body-parser';
+import { randomBytes } from 'crypto';
+import cors from 'cors';
+import axios from 'axios';
 
 const app = express();
 app.use(bodyParser.json());
@@ -31,11 +30,6 @@ app.post('/posts/create', async (req: Request, res: Response) => {
   });
 
   res.status(201).send({});
-});
-
-app.post('/events', (req: Request, res: Response) => {
-  console.log('Received Event', req.body.type);
-  res.send({});
 });
 
 export { app };

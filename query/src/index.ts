@@ -1,11 +1,10 @@
 import mongoose from 'mongoose';
 import { Query } from './models/query';
 
-const express = require('express');
-import { Request, Response } from 'express';
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const axios = require('axios');
+import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import axios from 'axios';
 
 interface event {
   type: string;
@@ -95,7 +94,7 @@ const start = async () => {
     console.log('Listening on 4002');
     try {
       const { data } = await axios.get('http://event-bus-srv:4005/events');
-      console.log(data);
+      console.log('Restoring Ok');
       for (let event of data) {
         console.log('Processing event:', event.type);
         handleEvent(event.type, event.data);
