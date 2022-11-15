@@ -26,23 +26,31 @@ const handleEvent = async (type: string, data: event['data']) => {
   if (type === 'PostCreated' && data) {
     console.log(type);
     const { postId, title } = data;
-    const query = Query.build({ postId, title });
-    await query.save();
+    const post = await Query.findOne({ postId: postId });
+    if (!post) {
+      const query = Query.build({ postId, title });
+      await query.save();
+    }
   }
 
   if (type === 'CommentCreated' && data) {
     const { commentId, content, postId, status } = data;
-    console.log(postId);
-    await Query.findOneAndUpdate(
-      {
-        postId: postId,
-      },
-      { $push: { commentId: commentId, status: status, content: content } },
-      {
-        new: true,
-      }
-    );
-    // post.comments.push({ id, content, status });
+    let post = await Query.findOne({ postId: postId });
+    if (post) {
+      if (post.comment == undefined)
+        post = Object.assign({ comment: [] }, post);
+      const check = post.comment!.find(
+        (element) => element.commentId == commentId
+      );
+      if (!check)
+        post.comment!.push({
+          commentId: commentId!,
+          status: status!,
+          content: content!,
+        });
+
+      await post.save();
+    }
   }
 
   if (type == 'CommentUpdated' && data) {
