@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 // An interface that describes the properties
 // that are required to create a new Post
 interface PostAttrs {
-  id: string;
+  postId: string;
   title: string;
 }
 
@@ -16,14 +16,14 @@ interface PostModel extends mongoose.Model<PostDoc> {
 // An interface that describes the properties
 // that a User Document has
 interface PostDoc extends mongoose.Document {
-  id: string;
+  postId: string;
   title: string;
   createdAt: string;
   updatedAt: string;
 }
 
 const postSchema = new mongoose.Schema({
-  id: {
+  postId: {
     type: String,
     required: true,
   },

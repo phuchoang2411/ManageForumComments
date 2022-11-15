@@ -16,16 +16,16 @@ app.use(cors());
 // });
 
 app.post('/posts/create', async (req: Request, res: Response) => {
-  const id: string = randomBytes(4).toString('hex');
+  const postId: string = randomBytes(4).toString('hex');
   const { title } = req.body;
 
-  const post = Post.build({ id, title });
+  const post = Post.build({ postId, title });
   await post.save();
 
   await axios.post('http://event-bus-srv:4005/events', {
     type: 'PostCreated',
     data: {
-      id,
+      postId,
       title,
     },
   });

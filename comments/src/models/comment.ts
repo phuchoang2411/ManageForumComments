@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 // An interface that describes the properties
 // that are required to create a new Comment
 interface CommentAttrs {
-  id: string;
-  title: string;
+  commentId: string;
+  content: string;
+  postId: string;
 }
 
 // An interface that describes the properties
@@ -16,18 +17,23 @@ interface CommentModel extends mongoose.Model<CommentDoc> {
 // An interface that describes the properties
 // that a User Document has
 interface CommentDoc extends mongoose.Document {
-  id: string;
-  title: string;
+  commentId: string;
+  postId: string;
+  content: string;
   createdAt: string;
   updatedAt: string;
 }
 
 const CommentSchema = new mongoose.Schema({
-  id: {
+  commentId: {
     type: String,
     required: true,
   },
-  title: {
+  content: {
+    type: String,
+    required: true,
+  },
+  postId: {
     type: String,
     required: true,
   },

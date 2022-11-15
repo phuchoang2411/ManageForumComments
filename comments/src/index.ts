@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import { Comment } from './models/comment';
+import mongoose from 'mongoose';
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -17,26 +19,30 @@ const commentsByPostId = {};
 // });
 
 app.post('/posts/:id/comments', async (req: Request, res: Response) => {
-  const commentId = randomBytes(4).toString('hex');
+  const commentId: string = randomBytes(4).toString('hex');
   const { content } = req.body;
+  const postId = req.params.id;
 
-  const comments = commentsByPostId[req.params.id] || [];
+  const comment = Comment.build({ commentId, content, postId });
+  await comment.save();
 
-  comments.push({ id: commentId, content, status: 'pending' });
+  // const comments = commentsByPostId[req.params.id] || [];
 
-  commentsByPostId[req.params.id] = comments;
+  // comments.push({ id: commentId, content, status: 'pending' });
+
+  // commentsByPostId[req.params.id] = comments;
 
   await axios.post('http://event-bus-srv:4005/events', {
     type: 'CommentCreated',
     data: {
-      id: commentId,
+      commentId: commentId,
       content,
       postId: req.params.id,
       status: 'pending',
     },
   });
 
-  res.status(201).send(comments);
+  res.status(201).send({});
 });
 
 app.post('/events', async (req: Request, res: Response) => {
@@ -45,17 +51,17 @@ app.post('/events', async (req: Request, res: Response) => {
   const { type, data } = req.body;
 
   if (type === 'CommentModerated') {
-    const { postId, id, status, content } = data;
-    const comments = commentsByPostId[postId];
-    const comment = comments.find((comment) => {
-      return comment.id === id;
-    });
-    comment.status = status;
+    const { postId, commentId, status, content } = data;
+    // const comments: [] = commentsByPostId[postId];
+    // const comment = comments.find((comment) => {
+    //   return comment.id === id;
+    // });
+    // comment.status = status;
 
     await axios.post('http://event-bus-srv:4005/events', {
       type: 'CommentUpdated',
       data: {
-        id,
+        commentId,
         content,
         postId,
         status,
@@ -66,6 +72,20 @@ app.post('/events', async (req: Request, res: Response) => {
   res.send({});
 });
 
-app.listen(4001, () => {
-  console.log('Listening on port 4001');
-});
+const start = async () => {
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI must be defined');
+  }
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('Connected to MongoDb');
+  } catch (err) {
+    console.error(err);
+  }
+
+  app.listen(4001, () => {
+    console.log('Listening on port 4001');
+  });
+};
+
+start();
