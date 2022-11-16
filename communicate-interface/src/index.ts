@@ -1,17 +1,25 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const axios = require('axios');
-//const cors = require('cors');
+import express, { Request, Response } from 'express';
+import bodyParser from 'body-parser';
+import axios from 'axios';
+
+interface Event {
+  type: String;
+  data: {
+    commentId: String;
+    content: String;
+    postId: String;
+    status: String;
+  };
+}
 
 const app = express();
 app.use(bodyParser.json());
-//app.use(cors());
 
-const events = [];
+const events: Event[] = [];
 let count = 0;
 
-app.post('/events', async (req, res) => {
-  const event = req.body;
+app.post('/events', async (req: Request, res: Response) => {
+  const event: Event = req.body;
   if (event.type == 'PostCreated') {
     try {
       await axios.post('http://query-srv:4002/events', event);
@@ -37,8 +45,6 @@ app.post('/events', async (req, res) => {
 
   events.push(event);
   console.log(count);
-
-  res.send({ status: 'OK' });
 });
 app.get('/events', (req, res) => {
   res.send(events);

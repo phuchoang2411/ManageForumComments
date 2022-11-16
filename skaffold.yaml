@@ -22,18 +22,10 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '*.js'
+          - src: '*.ts'
             dest: .
-    - image: phuchoang2411/event-bus
-      context: event-bus
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: '*.js'
-            dest: .
-    - image: phuchoang2411/moderation
-      context: moderation
+    - image: phuchoang2411/communicate-interface
+      context: communicate-interface
       docker:
         dockerfile: Dockerfile
       sync:
@@ -46,7 +38,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '*.js'
+          - src: '*.ts'
             dest: .
     - image: phuchoang2411/query
       context: query
@@ -54,5 +46,5 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '*.js'
+          - src: '*.ts'
             dest: .
