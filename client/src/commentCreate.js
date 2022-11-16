@@ -24,7 +24,7 @@ export default ({ postId }) => {
       <form onSubmit={onSubmit}>
         <div class="input-group mb-3">
           <div class="mb-3">
-            <label>Comment</label>
+            <h6>Leave your comment</h6>
             <input
               value={content}
               onChange={(e) => setContent(e.target.value)}
