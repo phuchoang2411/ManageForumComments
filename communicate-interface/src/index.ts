@@ -21,22 +21,13 @@ let count = 0;
 app.post('/events', async (req: Request, res: Response) => {
   const event: Event = req.body;
   if (event.type == 'PostCreated') {
-    try {
-      await axios.post('http://query-srv:4002/events', event);
-      console.log(event.type);
-    } catch (error) {
-      console.log('Error');
-    }
+    await axios.post('http://query-srv:4002/events', event);
+    console.log(event.type);
   }
 
   if (event.type == 'CommentCreated') {
-    try {
-      await axios.post('http://query-srv:4002/events', event);
-      console.log(event.type);
-      count++;
-    } catch (error) {
-      console.log('Error');
-    }
+    await axios.post('http://query-srv:4002/events', event);
+    console.log(event.type);
   }
 
   events.push(event);
