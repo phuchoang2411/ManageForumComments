@@ -3,23 +3,36 @@ import axios from 'axios';
 
 export default () => {
   const [title, setTitle] = useState('');
+  const [postContent, setContent] = useState('');
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await axios.post('http://posts.com/posts/create', {
+    await axios.post('http://forum.hoangphuc.com/posts/create', {
       title,
+      postContent,
     });
     setTitle('');
+    setContent('');
   };
 
   return (
-    <div>
+    <div clas="mb-3">
       <form onSubmit={onSubmit}>
-        <div class="mb-3">
-          <label>Title</label>
+        <div class="input-group">
+          <span class="input-group-text">Title</span>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            type="text"
+            aria-label="First name"
+            class="form-control"
+          />
+        </div>
+        <div class="mb-3">
+          <label>Content</label>
+          <input
+            value={postContent}
+            onChange={(e) => setContent(e.target.value)}
             class="form-control"
           />
         </div>

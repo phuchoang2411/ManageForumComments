@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: posts.com
+    - host: forum.hoangphuc.com
       http:
         paths:
           - path: /posts/create

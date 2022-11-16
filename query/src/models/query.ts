@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 // that are required to create a new query
 interface queryAttrs {
   postId: string;
-  title: string;
+  title?: string;
+  postContent?: string;
   comment?: [
     {
       commentId: string;
@@ -24,7 +25,8 @@ interface queryModel extends mongoose.Model<queryDoc> {
 // that a User Document has
 interface queryDoc extends mongoose.Document {
   postId: string;
-  title: string;
+  title?: string;
+  postContent?: string;
   comment?: [
     {
       commentId: string;
@@ -43,7 +45,11 @@ const querySchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: true,
+    required: false,
+  },
+  postContent: {
+    type: String,
+    required: false,
   },
   comment: {
     type: [

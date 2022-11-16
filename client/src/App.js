@@ -5,10 +5,10 @@ import PostList from './PostList';
 export default () => {
   return (
     <div className="container">
-      <h1>Create post</h1>
+      <h3>Create post</h3>
       <PostCreate />
       <hr />
-      <h1>Post list</h1>
+      <h3>Post list</h3>
       <PostList />
     </div>
   );

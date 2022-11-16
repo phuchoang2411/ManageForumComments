@@ -10,7 +10,8 @@ interface event {
   type: string;
   data?: {
     postId: string;
-    title: string;
+    title?: string;
+    postContent?: string;
     commentId?: string;
     content?: string;
     status?: string;
@@ -24,10 +25,10 @@ app.use(cors());
 const handleEvent = async (type: string, data: event['data']) => {
   if (type === 'PostCreated' && data) {
     console.log(type);
-    const { postId, title } = data;
+    const { postId, title, postContent } = data;
     const post = await Query.findOne({ postId: postId });
     if (!post) {
-      const query = Query.build({ postId, title });
+      const query = Query.build({ postId, title, postContent });
       await query.save();
     }
   }
