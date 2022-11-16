@@ -15,15 +15,15 @@ export default () => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <div className="form-group">
+        <div class="mb-3">
           <label>Title</label>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="form-control"
+            class="form-control"
           />
         </div>
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-outline-success">Submit</button>
       </form>
     </div>
   );

@@ -22,15 +22,17 @@ export default ({ postId }) => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <label>New Comment</label>
-          <input
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="form-control"
-          />
+        <div class="input-group mb-3">
+          <div class="mb-3">
+            <label>Comment</label>
+            <input
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              class="form-control"
+            />
+          </div>
         </div>
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-outline-success">Submit</button>
       </form>
     </div>
   );
