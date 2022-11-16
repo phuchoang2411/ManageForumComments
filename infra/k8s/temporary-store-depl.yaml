@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporary-store-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temporary-store
+  template:
+    metadata:
+      labels:
+        app: temporary-store
+    spec:
+      containers:
+        - name: temporary-store
+          image: phuchoang2411/temporary-store
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://temporary-store-mongo-srv:27017/temporary-store'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: temporary-store-srv
+spec:
+  selector:
+    app: temporary-store
+  ports:
+    - name: temporary-store
+      protocol: TCP
+      port: 5001
+      targetPort: 5001

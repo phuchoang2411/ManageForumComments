@@ -10,7 +10,7 @@ import axios from 'axios';
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-let count = 0;
+let count = 996;
 
 app.post('/posts/:id/comments', async (req: Request, res: Response) => {
   count++;
@@ -18,7 +18,7 @@ app.post('/posts/:id/comments', async (req: Request, res: Response) => {
   const { content } = req.body;
   const postId = req.params.id;
   setTimeout(function () {
-    count = 0;
+    count = 996;
   }, 10000);
   if (count < 1000) {
     const comment = Comment.build({ commentId, content, postId });
@@ -34,7 +34,8 @@ app.post('/posts/:id/comments', async (req: Request, res: Response) => {
     });
     res.status(201).send('created');
   } else {
-    res.status(200).send('Full');
+    res.status(503).send('Service Unavailable');
+    console.log('Service Unavailable');
   }
 });
 

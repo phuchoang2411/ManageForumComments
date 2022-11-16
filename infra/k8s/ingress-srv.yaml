@@ -31,6 +31,13 @@ spec:
                 name: comments-srv
                 port:
                   number: 4001
+          - path: /posts/?(.*)/temp
+            pathType: Prefix
+            backend:
+              service:
+                name: temporary-store-srv
+                port:
+                  number: 5001
           - path: /?(.*)
             pathType: Prefix
             backend:

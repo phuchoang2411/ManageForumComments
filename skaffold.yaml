@@ -48,3 +48,11 @@ build:
         manual:
           - src: '*.ts'
             dest: .
+    - image: phuchoang2411/temporary-store
+      context: temporary-store
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.ts'
+            dest: .

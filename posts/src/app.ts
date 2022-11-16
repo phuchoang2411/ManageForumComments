@@ -10,10 +10,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// app.get('/posts', (req: Request, res: Response) => {
-//   res.send(posts);
-// });
-
 app.post('/posts/create', async (req: Request, res: Response) => {
   const postId: string = randomBytes(4).toString('hex');
   const { title } = req.body;

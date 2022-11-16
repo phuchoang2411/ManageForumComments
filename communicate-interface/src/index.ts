@@ -16,7 +16,6 @@ const app = express();
 app.use(bodyParser.json());
 
 const events: Event[] = [];
-let count = 0;
 
 app.post('/events', async (req: Request, res: Response) => {
   const event: Event = req.body;
@@ -31,7 +30,6 @@ app.post('/events', async (req: Request, res: Response) => {
   }
 
   events.push(event);
-  console.log(count);
   res.status(200).send('ok');
 });
 app.get('/events', (req, res) => {
