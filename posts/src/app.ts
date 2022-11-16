@@ -21,7 +21,7 @@ app.post('/posts/create', async (req: Request, res: Response) => {
   const post = Post.build({ postId, title });
   await post.save();
 
-  await axios.post('http://event-bus-srv:4005/events', {
+  await axios.post('http://communicate-interface-srv:4005/events', {
     type: 'PostCreated',
     data: {
       postId,
@@ -29,7 +29,7 @@ app.post('/posts/create', async (req: Request, res: Response) => {
     },
   });
 
-  res.status(201).send({});
+  res.status(201).send('created');
 });
 
 export { app };

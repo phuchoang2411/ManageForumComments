@@ -93,7 +93,9 @@ const start = async () => {
   app.listen(4002, async () => {
     console.log('Listening on 4002');
     try {
-      const { data } = await axios.get('http://event-bus-srv:4005/events');
+      const { data } = await axios.get(
+        'http://communicate-interface-srv:4005/events'
+      );
       console.log('Restoring Ok');
       for (let event of data) {
         console.log('Processing event:', event.type);

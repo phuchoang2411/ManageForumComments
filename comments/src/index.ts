@@ -10,26 +10,32 @@ import axios from 'axios';
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+let count = 0;
 
 app.post('/posts/:id/comments', async (req: Request, res: Response) => {
+  count++;
   const commentId: string = randomBytes(4).toString('hex');
   const { content } = req.body;
   const postId = req.params.id;
-
-  const comment = Comment.build({ commentId, content, postId });
-  await comment.save();
-
-  await axios.post('http://event-bus-srv:4005/events', {
-    type: 'CommentCreated',
-    data: {
-      commentId: commentId,
-      content,
-      postId: req.params.id,
-      status: 'pending',
-    },
-  });
-
-  res.status(201).send({});
+  setTimeout(function () {
+    count = 0;
+  }, 10000);
+  if (count < 1000) {
+    const comment = Comment.build({ commentId, content, postId });
+    await comment.save();
+    await axios.post('http://communicate-interface-srv:4005/events', {
+      type: 'CommentCreated',
+      data: {
+        commentId: commentId,
+        content,
+        postId: req.params.id,
+        status: 'pending',
+      },
+    });
+    res.status(201).send('created');
+  } else {
+    res.status(200).send('Full');
+  }
 });
 
 const start = async () => {

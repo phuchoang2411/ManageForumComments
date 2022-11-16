@@ -30,12 +30,8 @@ app.post('/events', async (req: Request, res: Response) => {
   }
 
   if (event.type == 'CommentCreated') {
-    setTimeout(function () {
-      count = 0;
-    }, 10000);
-
     try {
-      if (count < 1000) await axios.post('http://query-srv:4002/events', event);
+      await axios.post('http://query-srv:4002/events', event);
       console.log(event.type);
       count++;
     } catch (error) {
@@ -45,6 +41,7 @@ app.post('/events', async (req: Request, res: Response) => {
 
   events.push(event);
   console.log(count);
+  res.status(200).send('ok');
 });
 app.get('/events', (req, res) => {
   res.send(events);
