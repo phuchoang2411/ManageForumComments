@@ -38,13 +38,6 @@ spec:
                 name: temporary-store-srv
                 port:
                   number: 5001
-          - path: /?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: client-srv
-                port:
-                  number: 3000
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:
@@ -52,3 +45,10 @@ spec:
                 name: auth-srv
                 port:
                   number: 3001
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000

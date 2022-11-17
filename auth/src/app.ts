@@ -5,10 +5,10 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError } from '@phuctickets/common';
 
-// import { currentUserRouter } from './routes/current-user';
-// import { signinUserRouter } from './routes/signin';
+import { currentUserRouter } from './routes/current-user';
+import { signinUserRouter } from './routes/signin';
 import { signuptUserRouter } from './routes/signup';
-// import { signoutUserRouter } from './routes/signout';
+import { signoutUserRouter } from './routes/signout';
 
 const app = express();
 app.set('trust proxy', true);
@@ -20,10 +20,10 @@ app.use(
   })
 );
 
-// app.use(currentUserRouter);
-// app.use(signinUserRouter);
+app.use(currentUserRouter);
+app.use(signinUserRouter);
 app.use(signuptUserRouter);
-// app.use(signoutUserRouter);
+app.use(signoutUserRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

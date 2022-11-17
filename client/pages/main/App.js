@@ -5,6 +5,7 @@ import PostList from './PostList';
 export default () => {
   return (
     <div className="container">
+      <h1>Our Forum </h1>
       <div class="row">
         <div class="col-sm">
           <button className="btn btn-outline-danger">Signup</button>
