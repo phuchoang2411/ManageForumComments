@@ -19,11 +19,11 @@ export default () => {
       </div>
       <div class="d-grid gap-3">
         <div class="p-2 bg-light border">
-          <h3>Write new post</h3>
+          <h3>Write something</h3>
           <PostCreate />
         </div>
         <div class="p-2 bg-light border">
-          <h3>Post list</h3>
+          <h3>Newsfeed</h3>
           <PostList />
         </div>
       </div>

@@ -47,6 +47,8 @@ router.post(
       jwt: userJwt,
     };
 
+    console.log(existingUser);
+
     res.status(200).send(existingUser);
   }
 );

@@ -7,11 +7,11 @@ export default ({ postId }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(`http://forum.hoangphuc.com/posts/${postId}/comments`, {
+      await axios.post(`http://forum.dev/posts/${postId}/comments`, {
         content,
       });
     } catch (err) {
-      await axios.post(`http://forum.hoangphuc.com/posts/${postId}/temp`, {
+      await axios.post(`http://forum.dev/posts/${postId}/temp`, {
         content,
       });
     }
