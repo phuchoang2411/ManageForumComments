@@ -1,29 +1,44 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import useRequest from '../../hooks/use-request';
+import storeOnTemporaryDB from '../../hooks/storeOnTemporaryDB';
 
 export default ({ postId }) => {
   const [content, setContent] = useState('');
+  const mainServer = `/posts/${postId}/comments`;
+  const temporaryServer = `/posts/${postId}/temp`;
+  let check;
+  const { doRequest, errors } = useRequest({
+    url: mainServer,
+    method: 'post',
+    body: {
+      content,
+    },
+    onSuccess: () => (check = true),
+  });
+
+  const { storeTemp, errorsTemp } = storeOnTemporaryDB({
+    url: temporaryServer,
+    method: 'post',
+    body: {
+      content,
+    },
+    onSuccess: () => console.log('OK'),
+  });
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await axios.post(`http://forum.dev/posts/${postId}/comments`, {
-        content,
-      });
-    } catch (err) {
-      await axios.post(`http://forum.dev/posts/${postId}/temp`, {
-        content,
-      });
-    }
-
+    check = false;
+    await doRequest();
+    console.log(check);
+    if (check == false) await storeTemp();
     setContent('');
   };
 
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <div class="input-group mb-3">
-          <div class="mb-3">
+        <div className="input-group mb-3">
+          <div className="mb-3">
             <h6>Leave your comment</h6>
             <input
               value={content}
@@ -32,6 +47,8 @@ export default ({ postId }) => {
             />
           </div>
         </div>
+        {errors}
+        {errorsTemp}
         <button className="btn btn-outline-success">Submit</button>
       </form>
     </div>

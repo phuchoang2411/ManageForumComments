@@ -17,8 +17,8 @@ app.post('/posts/:id/temp', async (req: Request, res: Response) => {
   const temp = Temp.build({ commentId, content, postId });
   await temp.save();
 
-  console.log('Temporary store created');
-  res.status(201).send('Temporary store created');
+  console.log('Temporary store created!');
+  res.status(201).send('Temporary store created!');
 });
 
 export { app };

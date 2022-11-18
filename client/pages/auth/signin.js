@@ -42,7 +42,7 @@ export default () => {
         />
       </div>
       {errors}
-      <button className="btn btn-primary">Sign in</button>
+      <button className="btn btn-outline-warning">Sign in</button>
     </form>
   );
 };

@@ -8,7 +8,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
     <div>
       <Header currentUser={currentUser} />
       <Component {...pageProps} />
-      <App />
+      <App currentUser={currentUser} />
     </div>
   );
 };

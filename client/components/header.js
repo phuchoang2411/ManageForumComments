@@ -29,7 +29,7 @@ export default ({ currentUser }) => {
   return (
     <nav className="navbar navbar-light bg-light">
       <Link legacyBehavior href="/">
-        <a className="navbar-brand">GitTix</a>
+        <a className="navbar-brand">Forum</a>
       </Link>
 
       <div className="d-flex justify-content-end">

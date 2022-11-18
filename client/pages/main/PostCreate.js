@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import useRequest from '../../hooks/use-request';
 
 export default () => {
   const [title, setTitle] = useState('');
   const [postContent, setContent] = useState('');
+  const { doRequest, errors } = useRequest({
+    url: '/posts/create',
+    method: 'post',
+    body: {
+      title,
+      postContent,
+    },
+    onSuccess: () => console.log('OK'),
+  });
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await axios.post('http://forum.dev/posts/create', {
-      title,
-      postContent,
-    });
+    await doRequest();
     setTitle('');
     setContent('');
   };
@@ -18,8 +25,8 @@ export default () => {
   return (
     <div clas="mb-3">
       <form onSubmit={onSubmit}>
-        <div class="input-group">
-          <span class="input-group-text">Title</span>
+        <div className="input-group">
+          <span className="input-group-text">Title</span>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -28,7 +35,7 @@ export default () => {
             class="form-control"
           />
         </div>
-        <div class="mb-3">
+        <div className="mb-3">
           <label>Content</label>
           <input
             value={postContent}
@@ -36,6 +43,7 @@ export default () => {
             class="form-control"
           />
         </div>
+        {errors}
         <button className="btn btn-outline-success">Submit</button>
       </form>
     </div>

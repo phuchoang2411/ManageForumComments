@@ -23,6 +23,7 @@ app.post('/posts/:id/comments', async (req: Request, res: Response) => {
   if (count < 1000) {
     const comment = Comment.build({ commentId, content, postId });
     await comment.save();
+    console.log('Comment created');
     await axios.post('http://communicate-interface-srv:4005/events', {
       type: 'CommentCreated',
       data: {
@@ -51,7 +52,7 @@ const start = async () => {
   }
 
   app.listen(4001, () => {
-    console.log('Listening on port 4001');
+    console.log('Listening on port 4001!');
   });
 };
 

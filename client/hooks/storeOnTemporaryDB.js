@@ -2,9 +2,9 @@ import axios from 'axios';
 import { useState } from 'react';
 
 export default ({ url, method, body, onSuccess }) => {
-  const [errors, setErrors] = useState(null);
+  const [errorsTemp, setErrors] = useState(null);
 
-  const doRequest = async () => {
+  const storeTemp = async () => {
     try {
       console.log(url);
       setErrors(null);
@@ -30,5 +30,5 @@ export default ({ url, method, body, onSuccess }) => {
     }
   };
 
-  return { doRequest, errors };
+  return { storeTemp, errorsTemp };
 };
